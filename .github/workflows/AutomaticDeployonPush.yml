@@ -1,0 +1,25 @@
+name: Automatic Deploy on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Install dependencies and build app
+        run: |
+          npm install
+          npm run build
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ kIA5V268KURig1IUSHSD8gqu }}
+          vercel-org-id: ${{ armesha }}
+          vercel-project-id: ${{ chatbot-ui }}
